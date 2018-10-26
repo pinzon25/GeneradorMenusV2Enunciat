@@ -104,7 +104,7 @@ public class MenuRegim extends Menu implements Components{
 
         System.out.println("\nCalories del menú: " + calories);
         System.out.println("\nEntra les noves calories del menú:");
-        calories = (double)demanarDades("\nEntra les noves calories del menú:",2);
+        calories = (double)demanarDades("\nEntra les noves calories del menú:",3);
         //calories = DADES.nextDouble();
         DADES.nextLine(); //Neteja buffer
         /*calories = dades.nextDouble();
