@@ -10,13 +10,12 @@ import java.util.Scanner;
  *
  * @author fta
  */
-public class Aliment extends Recepta {
+public class Aliment implements Components {
 
-    private final static Scanner DADES = new Scanner(System.in);
-
-    private String codi;
-    private String nom;
-    private double quantitat;
+    //private final static Scanner DADES = new Scanner(System.in);
+    private static String codi;
+    private static String nom;
+    private static double quantitat;
 
     /*
      CONSTRUCTOR
@@ -25,6 +24,7 @@ public class Aliment extends Recepta {
      - Assignar als atributs els valors passats com a paràmetres.
      */
     public Aliment(String pCodi, String pNom, double pQuantitat) {
+
         codi = pCodi;
         nom = pNom;
         quantitat = pQuantitat;
@@ -66,11 +66,13 @@ public class Aliment extends Recepta {
      paraula, per exemple, farina de força.
      Retorn: El nou aliment.
      */
+    //public static Aliment nouAliment() {
     public static Aliment nouAliment() {
-
+        /*
         String codi;
         String nom;
         double quantitat;
+        */
 
         System.out.println("Codi de l'aliment:");
         codi = DADES.next();
@@ -106,7 +108,7 @@ public class Aliment extends Recepta {
         quantitat = DADES.nextDouble();
     }
 
-    public void mostrarAliment() {
+    public void mostrarComponent() {
         System.out.println("\nLes dades de l'aliment amb codi " + codi + " són:");
         System.out.println("\nNom: " + nom);
         System.out.println("\nQuantitat: " + quantitat);

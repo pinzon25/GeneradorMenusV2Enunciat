@@ -12,9 +12,9 @@ import java.util.Scanner;
  *
  * @author fta
  */
-public abstract class Recepta implements Components {
+public class Recepta implements Components {
 
-    private final static Scanner DADES = new Scanner(System.in);
+    //private final static Scanner DADES = new Scanner(System.in);
     private static String codi;
     private static String nom;
     private static Aliment[] ingredients;
@@ -129,7 +129,7 @@ public abstract class Recepta implements Components {
      Francesc Xavier, o bé, matí i tarda.
      Retorn: La nova recepta.
      */
-    public static void novaRecepta() {
+    public void novaRecepta() {
         /*
         String codi;
         String nom;
@@ -172,8 +172,7 @@ public abstract class Recepta implements Components {
      */
     public void modificarRecepta() {
 
-        String tipus;
-
+        //String tipus;
         System.out.println("\nCodi de la recepta: " + codi);
         System.out.println("\nEntra el nou codi:");
         codi = DADES.next();
@@ -198,14 +197,19 @@ public abstract class Recepta implements Components {
         DADES.nextLine(); //Neteja buffer
     }
 
-    public void mostrarRecepta() {
+    public void mostrarComponent() {
         System.out.println("\nLes dades de la recepta amb codi " + codi + " són:");
         System.out.println("\nNom:" + nom);
         System.out.println("\nTipus:" + tipus);
         System.out.println("\nCalories:" + calories);
         System.out.println("\nIngredients:");
         for (int i = 0; i < ingredients.length && ingredients[i] != null; i++) {
-            ingredients[i].mostrarAliment();
+            ingredients[i].mostrarComponent();
+            /*El metode mostrarComponent el podem utilitzar amb l'atribut ingredient d'aquesta classe, de tipus Aliment. 
+            Ja que repassem tots els aliments, i volem imprimir el seu contingut. 
+            El metode de la classe aliment de mostrarAliment(), 
+            el podem substituir pel metode de la interface anomentat mostrarComponent(), ja que tambe implementa la interface.
+             */
         }
         System.out.println("\nElaboració:" + elaboracio);
     }
@@ -251,15 +255,6 @@ public abstract class Recepta implements Components {
         }
 
         return pos;
-    }
-
-    
-    public void mostrarComponent() {
-        System.out.println("El codi de la recepta es: " + codi);
-        System.out.println("El nom de la recepta es: " + nom);
-        System.out.println("La elaboracio de la recepta es: " + elaboracio);
-        System.out.println("El tipus de recepta es: " + tipus);
-        System.out.println("Les calories de la recepta son: " + calories);
     }
 
 }
