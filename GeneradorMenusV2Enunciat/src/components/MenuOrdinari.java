@@ -11,12 +11,7 @@ import java.util.Date;
  *
  * @author fta
  */
-public class MenuOrdinari {
-
-    private int codi;
-    private static int properCodi = 1; //El proper codi a assignar
-    private Date data; //data de creació del menú
-    private Recepta[] plats;
+public class MenuOrdinari extends Menu {
 
     /*
      CONSTRUCTOR
@@ -28,10 +23,7 @@ public class MenuOrdinari {
      - data s'ha d'incialitzar amb la data actual del sistema.     
      */
     public MenuOrdinari() {
-        codi = properCodi;
-        properCodi++;
-        plats = new Recepta[3];
-        data = new Date();
+        super();
     }
 
     /*
@@ -69,40 +61,9 @@ public class MenuOrdinari {
         this.plats = plats;
     }
 
-    public void mostrarMenu() {
-        System.out.println("\nLes dades del menú amb codi " + codi + " són:");
-        SimpleDateFormat formatData= new SimpleDateFormat("D - E dd-MM-yy hh:mm:ss");
-        System.out.println("\nData de creació:" + formatData.format(data));
-        System.out.println("\nPlats:");
-        for (int i = 0; i < plats.length; i++) {
-            switch (i) {
-                case 0:
-                    if (plats[0] == null) {
-                        System.out.println("\nNo hi ha primer plat");
-                    } else {
-                        System.out.println("\nPrimer plat: ");
-                        plats[0].mostrarRecepta();
-                    }
-                    break;
-                case 1:
-                    if (plats[1] == null) {
-                        System.out.println("\nNo hi ha segon plat");
-                    } else {
-                        System.out.println("\nSegon plat: ");
-                        plats[1].mostrarRecepta();
-                    }
-                    break;
-                case 2:
-                    if (plats[2] == null) {
-                        System.out.println("\nNo hi ha postres");
-                    } else {
-                        System.out.println("\nPostres: ");
-                        plats[2].mostrarRecepta();
-                    }
-                    break;
-            }
-        }
-    }
+    /*public void mostrarMenu() {
+        super.mostrarMenu();
+    }*/
 
     /*
      PLATS
@@ -128,5 +89,16 @@ public class MenuOrdinari {
         }
         
         recepta.setAssignada(true);
+    }
+
+    @Override
+    public void mostrarComponent() {
+        super.mostrarComponent();
+        
+    }
+
+    @Override
+    public Object demanarDades(String peticio, int tipus) {
+        return super.demanarDades(peticio, tipus); //To change body of generated methods, choose Tools | Templates.
     }
 }

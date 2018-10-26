@@ -13,14 +13,8 @@ import java.util.Scanner;
  *
  * @author fta
  */
-public class MenuRegim {
+public class MenuRegim extends Menu implements Components{
 
-    private final static Scanner DADES = new Scanner(System.in);
-
-    private int codi;
-    private static int properCodi = 1; //El proper codi a assignar
-    private Date data; //data de creació del menú
-    private Recepta[] plats;
     private double calories;
 
     /*
@@ -34,10 +28,7 @@ public class MenuRegim {
      - data s'ha d'incialitzar amb la data actual del sistema.     
      */
     public MenuRegim(double pCalories) {
-        codi = properCodi;
-        properCodi++;
-        plats = new Recepta[3];
-        data = new Date();
+        super();
         calories = pCalories;
     }
 
@@ -113,47 +104,20 @@ public class MenuRegim {
 
         System.out.println("\nCalories del menú: " + calories);
         System.out.println("\nEntra les noves calories del menú:");
-        calories = dades.nextDouble();
-        dades.nextLine(); //Neteja buffer
+        calories = (double)demanarDades("\nEntra les noves calories del menú:",2);
+        //calories = DADES.nextDouble();
+        DADES.nextLine(); //Neteja buffer
+        /*calories = dades.nextDouble();
+        dades.nextLine(); //Neteja buffer*/
     }
 
-    public void mostrarMenu() {
-        System.out.println("\nLes dades del menú amb codi " + codi + " són:");
-        SimpleDateFormat formatData = new SimpleDateFormat("D - E dd-MM-yy hh:mm:ss");
-        System.out.println("\nData de creació:" + formatData.format(data));
+    /* public void mostrarMenu() {
+        super.mostrarMenu();
         System.out.println("\nLes calories són: " + calories);
-        System.out.println("\nPlats:");
-        for (int i = 0; i < plats.length; i++) {
-            switch (i) {
-                case 0:
-                    if (plats[0] == null) {
-                        System.out.println("\nNo hi ha primer plat");
-                    } else {
-                        System.out.println("\nPrimer plat: ");
-                        plats[0].mostrarRecepta();
-                    }
-                    break;
-                case 1:
-                    if (plats[1] == null) {
-                        System.out.println("\nNo hi ha segon plat");
-                    } else {
-                        System.out.println("\nSegon plat: ");
-                        plats[1].mostrarRecepta();
-                    }
-                    break;
-                case 2:
-                    if (plats[2] == null) {
-                        System.out.println("\nNo hi ha postres");
-                    } else {
-                        System.out.println("\nPostres: ");
-                        plats[0].mostrarRecepta();
-                    }
-                    break;
-            }
-        }
-    }
 
-    /*
+    }*/
+
+ /*
      PLATS
      */
  /*
@@ -182,4 +146,12 @@ public class MenuRegim {
 
         recepta.setAssignada(true);
     }
+
+    @Override
+    public void mostrarComponent() {
+        super.mostrarComponent();
+        System.out.println("\nLes calories són: " + calories);
+
+    }
+
 }
