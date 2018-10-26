@@ -15,14 +15,14 @@ import java.util.Scanner;
 public class Recepta implements Components {
 
     //private final static Scanner DADES = new Scanner(System.in);
-    private static String codi;
-    private static String nom;
-    private static Aliment[] ingredients;
-    private static int posicioIngredients; //Possició actual buida del vector ingredients
-    private static String elaboracio;
-    private static String tipus;
-    private static double calories;
-    private static boolean assignada;
+    private String codi;
+    private String nom;
+    private Aliment[] ingredients;
+    private int posicioIngredients; //Possició actual buida del vector ingredients
+    private String elaboracio;
+    private String tipus;
+    private double calories;
+    private boolean assignada;
 
     /*
      CONSTRUCTOR
@@ -137,21 +137,18 @@ public class Recepta implements Components {
         String tipus;
         double calories;*/
 
-        System.out.println("\nCodi de la recepta:");
-        codi = DADES.next();
+        //calories = (tipus_dada)demanarDades("Inserta les dades X", valor);
+        codi = (String) demanarDades("\nCodi de la recepta:", 2);
         DADES.nextLine(); //Neteja buffer
-        System.out.println("\nNom de la recepta:");
-        nom = DADES.nextLine();
-        System.out.println("\nElaboració de la recepta:");
-        elaboracio = DADES.nextLine();
+        nom = (String) demanarDades("\nNom de la recepta:", 0);
+        elaboracio = (String) demanarDades("\nElaboració de la recepta:", 0);
 
         do {
-            System.out.println("\nTipus de recepta: ((1)primer plat, (2)segon plat, (P)Postres)");
-            tipus = DADES.next();
+            tipus = (String) demanarDades("\nTipus de recepta: ((1)primer plat, (2)segon plat, (P)Postres)", 2);
         } while (!(tipus.equals("1") || tipus.equals("2") || tipus.equals("P")));
 
         System.out.println("\nCalories de la recepta:");
-        calories = DADES.nextDouble();
+        calories = (double) demanarDades("\nCalories de la recepta:", 3);
 
     }
 
@@ -174,26 +171,23 @@ public class Recepta implements Components {
 
         //String tipus;
         System.out.println("\nCodi de la recepta: " + codi);
-        System.out.println("\nEntra el nou codi:");
-        codi = DADES.next();
+        codi = (String) demanarDades("\nEntra el nou codi:", 2);
         DADES.nextLine(); //Neteja buffer
+
         System.out.println("\nNom de la recepta: " + nom);
-        System.out.println("\nEntra el nou nom:");
-        nom = DADES.nextLine();
+        nom = (String) demanarDades("\nEntra el nou nom:", 0);
+
         System.out.println("\nElaboració de la recepta: " + elaboracio);
-        System.out.println("\nEntra la nova elaboració:");
-        elaboracio = DADES.nextLine();
+        elaboracio = (String) demanarDades("\nEntra la nova elaboració:", 0);
 
         System.out.println("\nTipus de recepta: " + this.tipus);
         do {
-            System.out.println("\nNou tipus: ((1)primer plat, (2)segon plat, (P)Postres");
-            tipus = DADES.next();
+            tipus = (String) demanarDades("\nNou tipus: ((1)primer plat, (2)segon plat, (P)Postres", 2);
         } while (!(tipus.equals("1") || tipus.equals("2") || tipus.equals("P")));
         this.tipus = tipus;
 
         System.out.println("\nCalories de la recepta: " + calories);
-        System.out.println("\nNoves calories de la recepta:");
-        calories = DADES.nextDouble();
+        calories = (double) demanarDades("\nNoves calories de la recepta:", 3);
         DADES.nextLine(); //Neteja buffer
     }
 
