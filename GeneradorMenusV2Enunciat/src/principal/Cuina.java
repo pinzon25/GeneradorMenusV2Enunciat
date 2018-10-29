@@ -6,6 +6,7 @@
 package principal;
 
 import components.Aliment;
+import components.Components;
 import components.MenuOrdinari;
 import components.MenuRegim;
 import components.Recepta;
@@ -15,10 +16,15 @@ import java.util.Scanner;
  *
  * @author fta
  */
-public class Cuina {
+public class Cuina implements Components {
 
-    private final static Scanner DADES = new Scanner(System.in);
+    private Components[] components;
+    private int posicioComponents;
+    private String adreca;
 
+
+    /*
+    //private final static Scanner DADES = new Scanner(System.in);
     private int codi;
     private static int properCodi = 1; //El proper codi a assignar
     private String adreca;
@@ -30,8 +36,8 @@ public class Cuina {
     private int posicioMenusOrdinaris; //Possició actual buida del vector menusOrdinaris
     private MenuRegim[] menusRegim;
     private int posicioMenusRegim; //Possició actual buida del vector menusRegim
-
-    /*
+     */
+ /*
      CONSTRUCTOR
      Paràmetres: valor per l'atribut adreca
      Accions:
@@ -46,7 +52,11 @@ public class Cuina {
      s'han d'inicialtizar a 0, ja que és la primera posició del vector aliments.
      */
     public Cuina(String pAdreca) {
-        codi = properCodi;
+        components = new Components[350];
+        posicioComponents = 0;
+        adreca = pAdreca;
+
+        /*codi = properCodi;
         properCodi++;
         adreca = pAdreca;
         receptes = new Recepta[100];
@@ -56,12 +66,36 @@ public class Cuina {
         posicioReceptes = 0;
         posicioAliments = 0;
         posicioMenusOrdinaris = 0;
-        posicioMenusRegim = 0;
+        posicioMenusRegim = 0;*/
+    }
+
+    public Components[] getComponents() {
+        return components;
+    }
+
+    public void setComponents(Components[] components) {
+        this.components = components;
+    }
+
+    public int getPosicioComponents() {
+        return posicioComponents;
+    }
+
+    public void setPosicioComponents(int posicioComponents) {
+        this.posicioComponents = posicioComponents;
+    }
+
+    public String getAdreca() {
+        return adreca;
+    }
+
+    public void setAdreca(String adreca) {
+        this.adreca = adreca;
     }
 
     /*
      Mètodes accessors    
-     */
+     *//*
     public int getCodi() {
         return codi;
     }
@@ -149,8 +183,9 @@ public class Cuina {
     public void setPosicioMenusRegim(int posicioMenusRegim) {
         this.posicioMenusRegim = posicioMenusRegim;
     }
+     */
 
-    /*
+ /*
      Paràmetres: cap
      Accions:
      - Demanar a l'usuari les dades per consola per crear una nova Cuina. Les dades
@@ -180,11 +215,12 @@ public class Cuina {
 
         System.out.println("\nAdreça de la cuina: " + adreca);
         System.out.println("\nEntra la nova adreça:");
-        adreca = DADES.nextLine();
+        adreca = (String) demanarDades("\nEntra la nova adreça:", 4);
+        //adreca = DADES.nextLine();
     }
 
-    public void mostrarCuina() {
-        System.out.println("\nLes dades de la cuina amb codi " + codi + " són:");
+    public void mostrarComponent() {
+        System.out.println("\nLes dades de la cuina amb codi " + posicioComponents + " són:");
         System.out.println("\nAdreça:" + adreca);
     }
 
@@ -200,25 +236,10 @@ public class Cuina {
      Retorn: cap
      */
     public void afegirRecepta() {
-        receptes[posicioReceptes] = Recepta.novaRecepta();
-        posicioReceptes++;
+        components[posicioComponents] = Recepta.novaRecepta();
+        posicioComponents++;
     }
 
-    public int seleccionarRecepta() {
-
-        System.out.println("\nCodi de la recepta?:");
-        boolean trobat = false;
-        int pos = -1;
-
-        for (int i = 0; i < posicioReceptes && !trobat; i++) {
-            if (receptes[i].getCodi().equals(DADES.next())) {
-                pos = i;
-                trobat = true;
-            }
-        }
-
-        return pos;
-    }
 
     /*
      ALIMENT
@@ -239,28 +260,70 @@ public class Cuina {
         Aliment aliment = Aliment.nouAliment();
 
         if (seleccionarAliment(aliment.getCodi()) == -1) {
-            aliments[posicioAliments] = aliment;
-            posicioAliments++;
+            components[posicioComponents] = aliment;
+            posicioComponents++;
         } else {
             System.out.println("\nL'aliment ja existeix");
         }
 
     }
 
-    public int seleccionarAliment(String codi) {
+    public int seleccionarComponent(int tipusComponent, Object codi) {
+        String tipusObjecte;
+        int valor;
+        int pos = -1;
+        boolean trobat = false;
 
         if (codi == null) {
-            System.out.println("\nCodi de l'aliment?:");
-            codi = DADES.next();
+
+            switch (tipusComponent) {
+                case 1:
+                    tipusObjecte = "la recepta";
+                    valor = 4;
+                case 2:
+                    tipusObjecte = "el aliment";
+                    valor = 4;
+                case 3:
+                    tipusObjecte = "el menu ordinari";
+                    valor = 1;
+
+                default:
+                    tipusObjecte = "el menu de regim";
+                    valor = 1;
+            }
+            String peticio = "Codi de " + tipusObjecte + "?";
+            codi = demanarDades(peticio, valor);
+
         }
 
-        boolean trobat = false;
-        int pos = -1;
+        for (int i = 0; i < posicioComponents && !trobat; i++) {
 
-        for (int i = 0; i < posicioAliments && !trobat; i++) {
-            if (aliments[i].getCodi().equals(codi)) {
-                pos = i;
-                trobat = true;
+            if (components[i] instanceof Aliment) {
+                if (((Aliment) components[i]).getCodi().equals(codi)) {
+                    pos = i;
+                    trobat = true;
+                }
+            }//  aliment
+
+            if (components[i] instanceof Recepta) {
+                if (((Recepta) components[i]).getCodi().equals(codi)) {
+                    pos = i;
+                    trobat = true;
+                }
+            }// recepta
+
+            if (components[i] instanceof MenuOrdinari) {
+                if (((MenuOrdinari) components[i]).getCodi() == (int)codi) {
+                    pos = i;
+                    trobat = true;
+                }
+            }// menu ordinari
+
+            if (components[i] instanceof MenuRegim) {
+                if (((MenuRegim) components[i]).getCodi()==((int)codi)) {
+                    pos = i;
+                    trobat = true;
+                }
             }
         }
 
@@ -279,24 +342,8 @@ public class Cuina {
      Retorn: cap
      */
     public void afegirMenuOrdinari() {
-        menusOrdinaris[posicioMenusOrdinaris] = new MenuOrdinari();
-        posicioMenusOrdinaris++;
-    }
-
-    public int seleccionarMenuOrdinari() {
-
-        System.out.println("\nCodi del menú ordinari?:");
-        boolean trobat = false;
-        int pos = -1;
-
-        for (int i = 0; i < posicioMenusOrdinaris && !trobat; i++) {
-            if (menusOrdinaris[i].getCodi() == DADES.nextInt()) {
-                pos = i;
-                trobat = true;
-            }
-        }
-
-        return pos;
+        components[posicioComponents] = new MenuOrdinari();
+        posicioComponents++;
     }
 
     /*
@@ -311,24 +358,8 @@ public class Cuina {
      Retorn: cap
      */
     public void afegirMenuRegim() {
-        menusRegim[posicioMenusRegim] = MenuRegim.nouMenuRegim();
-        posicioMenusRegim++;
-    }
-
-    public int seleccionarMenuRegim() {
-
-        System.out.println("\nCodi del menú de règim?:");
-        boolean trobat = false;
-        int pos = -1;
-
-        for (int i = 0; i < posicioMenusRegim && !trobat; i++) {
-            if (menusRegim[i].getCodi() == DADES.nextInt()) {
-                pos = i;
-                trobat = true;
-            }
-        }
-
-        return pos;
+        components[posicioComponents] = MenuRegim.nouMenuRegim();
+        posicioComponents++;
     }
 
     /*
@@ -473,5 +504,5 @@ public class Cuina {
         }
 
     }
-    
+
 }
