@@ -30,7 +30,7 @@ public class Aplicacio {
         do {
             System.out.println("\nSelecciona una opció");
             System.out.println("\n0. Sortir");
-            System.out.println("\n1. Gestió de cuines");
+            System.out.println("\n1. Gestió de cuines"); //FET
             System.out.println("\n2. Gestió de receptes");
             System.out.println("\n3. Gestió d'aliments");
             System.out.println("\n4. Gestió de menús ordinaris");
@@ -81,7 +81,8 @@ public class Aplicacio {
 
     public static void menuCuina() {
         int opcio = 0;
-
+        String codi;
+        boolean trobat = false;
         do {
             int pos = -1;
 
@@ -101,17 +102,22 @@ public class Aplicacio {
                     cuines[posicioCuines] = Cuina.novaCuina();
                     posicioCuines++;
                     break;
-                case 2:
-                    //pos = seleccionarCuina();
-                    pos = cuinaActual.getPosicioComponents();
+                case 2: //pos = seleccionarCuina(); //pos = cuinaActual.getPosicioComponents();
+                    codi = (String) demanarDades("Insereix la adreca de la cuina: ", 0);
+                    for (int i = 0; i < posicioCuines && !trobat; i++) { //repassem les cuines que tenim, i si el codi(direccio) de la cuina es igual que el introduit, la i es la posicio.
+                        if (cuines[i].getAdreca().equals(codi)) {
+                            pos = i;
+                            trobat = true;
+                        }
+                    }
                     if (pos >= 0) {
-                        cuinaActual = cuines[pos];
+                        cuinaActual = cuines[pos]; //cuinaActual obte la cuina que hem escollit.
                     } else {
                         System.out.println("\nNo existeix aquesta cuina");
                     }
                     break;
                 case 3:
-                    pos = cuinaActual.getPosicioComponents();
+                    //pos = cuinaActual.getPosicioComponents();
                     if (pos >= 0) {
                         cuines[pos].modificarCuina();
                     } else {
@@ -119,7 +125,7 @@ public class Aplicacio {
                     }
                     break;
                 case 4:
-                    for (int i = 0; i < cuines.length; i++) {
+                    for (int i = 0; i < posicioCuines; i++) {
                         cuines[i].mostrarComponent();
                     }
                     break;
@@ -130,21 +136,15 @@ public class Aplicacio {
         } while (opcio != 0);
     }
 
-    /*
-            System.out.println("\n1. Gestió de cuines");
-            System.out.println("\n2. Gestió de receptes");
-            System.out.println("\n3. Gestió d'aliments");
-            System.out.println("\n4. Gestió de menús ordinaris");
-            System.out.println("\n5. Gestió de menús de règim");
-     */
     public static void menuComponents(int tipus) {
         int opcio = 0;
+        int pos = -1;
+        String codi;
         switch (tipus) {
 
             case 1: //Recepta
-
                 do {
-                    System.out.println("\nSelecciona una opció");
+                    System.out.println("\nSelecciona una opció per a la Recepta: ");
                     System.out.println("\n0. Sortir");
                     System.out.println("\n1. Alta");
                     System.out.println("\n2. Modificar");
@@ -160,11 +160,18 @@ public class Aplicacio {
                             cuinaActual.afegirRecepta();
                             break;
                         case 2:
-                            //int pos = cuinaActual.seleccionarRecepta();
-                            int pos = cuinaActual.seleccionarComponent(1, null); //Li passem el 1 ja que es el numero assignat als objectes de tipus Recepta. Retorna la posicio de la recepta.
+                            //pos = cuinaActual.seleccionarRecepta();
+                            
+                            codi = (String) demanarDades("Insereix el codi de la recepta a modificar: ", 2);
+                            pos = cuinaActual.seleccionarComponent(1, codi); //Li passem el 1 ja que es el numero assignat als objectes de tipus Recepta. Retorna la posicio de la recepta.
+
+                            for (int i = 0; i < cuinaActual.getPosicioComponents(); i++) { //repassem els components que tenim a la cuina, i si el codi(direccio) de la cuina es igual que el introduit, la i es la posicio.
+                                if (cuinaActual.getComponents()[pos].equals(cuina)) { //if (cuines[i].getAdreca().equals(codi)) {
+                                    pos = i;
+                                }
+                            }
                             if (pos >= 0) {
                                 //cuinaActual.getReceptes()[pos].modificarRecepta();
-
                                 cuinaActual.getComponents()[pos].demanarDades("codi", 2);
                                 cuinaActual.getComponents()[pos].demanarDades("nom", 3);
                                 cuinaActual.getComponents()[pos].demanarDades("elaboracio", 0);
@@ -617,13 +624,13 @@ public class Aplicacio {
      Recomanacions:
      - estructura de control switch case per bifurcar les opcions
      - si no s'ha introduït cap opció de les de la llista, s'ha de mostrar el missatge
-     "S'ha de seleccionar una opció correcta del menú."
+     S'ha de seleccionar una opció correcta del menú.
      - definiu una variable int opcio;
      Nota important: 
      no controlem que l'usuari introdueixi una opció numèrica, doncs això ho farem 
      mitjançant les excepcions que veurem en la segúent unitat.
      */
- /*
+/*
     public static void menuMenusRegim() {
         int opcio = 0;
 
@@ -663,22 +670,5 @@ public class Aplicacio {
         } while (opcio != 0);
     }
 
-    public static Integer seleccionarCuina() {
-
-        System.out.println("\nCodi de la cuina?:");
-
-        int codi = DADES.nextInt();
-        boolean trobat = false;
-        int pos = -1;
-
-        for (int i = 0; i < posicioCuines && !trobat; i++) {
-            if (cuines[i].getCodi() == codi) {
-                pos = i;
-                trobat = true;
-            }
-        }
-
-        return pos;
-    }
-     */
-}
+    
+     }
