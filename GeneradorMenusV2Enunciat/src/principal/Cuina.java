@@ -33,6 +33,7 @@ public class Cuina implements Components {
     private Components[] components;
     private int posicioComponents;
     private String adreca;
+    private Recepta recepta;
 
     /*
      CONSTRUCTOR
@@ -90,6 +91,15 @@ public class Cuina implements Components {
     public void setAdreca(String adreca) {
         this.adreca = adreca;
     }
+    
+    public void setRecepta(Recepta recepta){
+        this.recepta = recepta;
+    }
+    
+    public Recepta getRecepta(Recepta recepta){
+        return recepta;
+    }
+    
 
     /*
      Mètodes accessors    
@@ -242,7 +252,6 @@ public class Cuina implements Components {
      */
     public void afegirRecepta() {
         /*
-        Recepta recepta = new Recepta(); // TODO: comprovar aixo, ho e afegit de més.
         receptes[posicioReceptes] = Recepta.novaRecepta();
         posicioReceptes++;
          */
@@ -250,7 +259,7 @@ public class Cuina implements Components {
         //Falta verificar.
         //components[posicioComponents] = (Recepta) (recepta.demanarDades(adreca, posicioComponents));
 
-        components[posicioComponents] = Recepta.novaRecepta();
+        components[posicioComponents] = recepta.novaRecepta();
         posicioComponents++;
     }
 
