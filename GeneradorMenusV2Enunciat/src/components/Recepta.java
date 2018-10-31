@@ -6,14 +6,16 @@
  */
 package components;
 
+import java.util.Scanner;
+
 /**
  *
  * @author fta
  */
-public class Recepta implements Components {
+public class Recepta implements Components{
 
-    /*Com la interface ja te la variable de tipus Scanner, aqui podem comentarla o directament eliminarla.*/
-    //private final static Scanner DADES = new Scanner(System.in);
+    //private final static Scanner DADES= new Scanner(System.in);
+    
     private String codi;
     private String nom;
     private Aliment[] ingredients;
@@ -35,17 +37,6 @@ public class Recepta implements Components {
      - assignada s'ha d'inicialitzar a false, ja que cuan es crea una recepta no està
      assignada a cap menú.
      */
-    public Recepta() {
-        codi = "";
-        nom = "";
-        ingredients = new Aliment[25];
-        posicioIngredients = 0;
-        elaboracio = "";
-        tipus = "";
-        calories = 0;
-        assignada = false;
-    }
-
     public Recepta(String pCodi, String pNom, String pElaboracio, String pTipus, double pCalories) {
         codi = pCodi;
         nom = pNom;
@@ -54,7 +45,7 @@ public class Recepta implements Components {
         elaboracio = pElaboracio;
         tipus = pTipus;
         calories = pCalories;
-        assignada = false;
+        assignada=false;
     }
 
     /*
@@ -123,7 +114,8 @@ public class Recepta implements Components {
     public void setAssignada(boolean assignada) {
         this.assignada = assignada;
     }
-
+    
+    
     /*
      Paràmetres: cap
      Accions:
@@ -139,50 +131,31 @@ public class Recepta implements Components {
      Francesc Xavier, o bé, matí i tarda.
      Retorn: La nova recepta.
      */
- /*
-    Com el metode novaRecepta() no es estatic, aqui si podem utilitzar el metode demanarDades, declarat a la interface.
-        Degut a que el metode retorna per defecte un "Object", el qual no es d'un tipus especificat, hem de realitzar un cast perque pugui entrar dintre del switch que conte la funcio i
-        funcionar correctament. Les opcions que tenen un int 0, es perque al switch del metode demanarDades, la opcio per defecte si no es 1,2 o 3, es un nextLine(), per tant els camps amb una
-        amplia quantitat de text els agafem com a nextLine();
-     */
-    public static Recepta novaRecepta() { //Li canviem el modificador i el tipus de retorn, ja que sino, no podrem cridarlo desde la classe cuina i afegir la recepta al vector components.
+    public static Recepta novaRecepta() {
         
-        //A la VERSIO ANTERIOR les variables locals es comenten.
         String codi;
         String nom;
         String elaboracio;
         String tipus;
         double calories;
 
-        /* //VERSIO ANTERIOR.
-        
-        codi = (String) demanarDades("\nCodi de la recepta:", 2);
+        System.out.println("\nCodi de la recepta:");
+        codi = DADES.next();
         DADES.nextLine(); //Neteja buffer
-        nom = (String) demanarDades("\nNom de la recepta:", 0);
-        elaboracio = (String) demanarDades("\nElaboració de la recepta:", 0);
+        System.out.println("\nNom de la recepta:");
+        nom = DADES.nextLine();
+        System.out.println("\nElaboració de la recepta:");
+        elaboracio = DADES.nextLine();
 
         do {
-            tipus = (String) demanarDades("\nTipus de recepta: ((1)primer plat, (2)segon plat, (P)Postres)", 2);
+            System.out.println("\nTipus de recepta: ((1)primer plat, (2)segon plat, (P)Postres)");
+            tipus = DADES.next();
         } while (!(tipus.equals("1") || tipus.equals("2") || tipus.equals("P")));
 
         System.out.println("\nCalories de la recepta:");
-        calories = (double) demanarDades("\nCalories de la recepta:", 3);
-         */
-        
-        //VERSIO ACTUAL
-        System.out.println("Codi de la recepta: ");
-        codi = DADES.next();
-        System.out.println("Nom de la recepta: ");
-        nom = DADES.nextLine();
-        System.out.println("Elaboracio de la recepta: ");
-        elaboracio = DADES.nextLine();
-        System.out.println("\n\nTipus de recepta: ((1)primer plat, (2)segon plat, (P)Postres)");
-        tipus = DADES.next();
-        System.out.println("Calories de la recepta: ");
         calories = DADES.nextDouble();
 
         return new Recepta(codi, nom, elaboracio, tipus, calories);
-
     }
 
     /*
@@ -200,25 +173,30 @@ public class Recepta implements Components {
      Retorn: cap
      */
     public void modificarRecepta() {
+        
+        String tipus;
 
         System.out.println("\nCodi de la recepta: " + codi);
-        codi = (String) demanarDades("\nEntra el nou codi:", 2);
+        System.out.println("\nEntra el nou codi:");
+        codi = DADES.next();
         DADES.nextLine(); //Neteja buffer
-
         System.out.println("\nNom de la recepta: " + nom);
-        nom = (String) demanarDades("\nEntra el nou nom:", 0);
-
+        System.out.println("\nEntra el nou nom:");
+        nom = DADES.nextLine();
         System.out.println("\nElaboració de la recepta: " + elaboracio);
-        elaboracio = (String) demanarDades("\nEntra la nova elaboració:", 0);
+        System.out.println("\nEntra la nova elaboració:");
+        elaboracio = DADES.nextLine();
 
         System.out.println("\nTipus de recepta: " + this.tipus);
         do {
-            tipus = (String) demanarDades("\nNou tipus: ((1)primer plat, (2)segon plat, (P)Postres", 2);
+            System.out.println("\nNou tipus: ((1)primer plat, (2)segon plat, (P)Postres");
+            tipus = DADES.next();
         } while (!(tipus.equals("1") || tipus.equals("2") || tipus.equals("P")));
         this.tipus = tipus;
 
         System.out.println("\nCalories de la recepta: " + calories);
-        calories = (double) demanarDades("\nNoves calories de la recepta:", 3);
+        System.out.println("\nNoves calories de la recepta:");
+        calories = DADES.nextDouble();
         DADES.nextLine(); //Neteja buffer
     }
 
@@ -230,11 +208,6 @@ public class Recepta implements Components {
         System.out.println("\nIngredients:");
         for (int i = 0; i < ingredients.length && ingredients[i] != null; i++) {
             ingredients[i].mostrarComponent();
-            /*El metode mostrarComponent el podem utilitzar amb l'atribut ingredient d'aquesta classe,ja que es de tipus Aliment, 
-            despres repassem tots els aliments, i imprimim el seu contingut. 
-            El metode de la classe aliment de mostrarAliment(), 
-            el podem substituir pel metode de la interface anomentat mostrarComponent(), ja que tambe implementa la interface.
-             */
         }
         System.out.println("\nElaboració:" + elaboracio);
     }
@@ -242,7 +215,7 @@ public class Recepta implements Components {
     /*
      INGREDIENT
      */
- /*
+    /*
      Paràmetres: cap
      Accions:
      - afegeix un nou ingredient al vector d'ingredients d'aquesta recepta (l'objecte actual),
@@ -266,7 +239,7 @@ public class Recepta implements Components {
         }
 
     }
-
+    
     public int seleccionarIngredient(String codi) {
 
         boolean trobat = false;
@@ -281,5 +254,4 @@ public class Recepta implements Components {
 
         return pos;
     }
-
 }
