@@ -6,11 +6,10 @@
 package principal;
 
 import components.Aliment;
-import components.Components;
 import components.MenuOrdinari;
 import components.MenuRegim;
 import components.Recepta;
-import java.util.Scanner;
+import components.Components;
 
 /**
  *
@@ -18,13 +17,7 @@ import java.util.Scanner;
  */
 public class Cuina implements Components {
 
-    private Components[] components;
-    private int posicioComponents;
-    private String adreca;
-
-
     /*
-    //private final static Scanner DADES = new Scanner(System.in);
     private int codi;
     private static int properCodi = 1; //El proper codi a assignar
     private String adreca;
@@ -37,7 +30,11 @@ public class Cuina implements Components {
     private MenuRegim[] menusRegim;
     private int posicioMenusRegim; //Possició actual buida del vector menusRegim
      */
- /*
+    private Components[] components;
+    private int posicioComponents;
+    private String adreca;
+
+    /*
      CONSTRUCTOR
      Paràmetres: valor per l'atribut adreca
      Accions:
@@ -56,7 +53,8 @@ public class Cuina implements Components {
         posicioComponents = 0;
         adreca = pAdreca;
 
-        /*codi = properCodi;
+        /*
+        codi = properCodi;
         properCodi++;
         adreca = pAdreca;
         receptes = new Recepta[100];
@@ -95,7 +93,8 @@ public class Cuina implements Components {
 
     /*
      Mètodes accessors    
-     *//*
+     */
+ /*
     public int getCodi() {
         return codi;
     }
@@ -182,8 +181,7 @@ public class Cuina implements Components {
 
     public void setPosicioMenusRegim(int posicioMenusRegim) {
         this.posicioMenusRegim = posicioMenusRegim;
-    }
-     */
+    }*/
 
  /*
      Paràmetres: cap
@@ -215,8 +213,7 @@ public class Cuina implements Components {
 
         System.out.println("\nAdreça de la cuina: " + adreca);
         System.out.println("\nEntra la nova adreça:");
-        adreca = (String) demanarDades("\nEntra la nova adreça:", 4);
-        //adreca = DADES.nextLine();
+        adreca = DADES.nextLine();
     }
 
     public void mostrarComponent() {
@@ -235,13 +232,45 @@ public class Cuina implements Components {
      - actualitza la posició del vector de receptes.
      Retorn: cap
      */
+ /*
+    -Recordeu, que com s’ha especificat abans, s’han de substituir la
+    petició i la lectura de dades introduïdes per l’usuari en els
+    diferents mètodes pel mètode demanarDades de la interfície.
+    
+    -Heu de fer els canvis necessaris en els diferents mètodes per
+    ajustar-los als nous mètodes i atributs.
+     */
     public void afegirRecepta() {
+        /*
+        receptes[posicioReceptes] = Recepta.novaRecepta();
+        posicioReceptes++;
+         */
+        
+        //Falta verificar.
+        //components[posicioComponents] = (Recepta) (recepta.demanarDades(adreca, posicioComponents));
+
         components[posicioComponents] = Recepta.novaRecepta();
         posicioComponents++;
     }
 
-
     /*
+    public int seleccionarRecepta() {
+
+        System.out.println("\nCodi de la recepta?:");
+        boolean trobat = false;
+        int pos = -1;
+
+        for (int i = 0; i < posicioComponents && !trobat; i++) {
+            if (receptes[i].getCodi().equals(DADES.next())) {
+                pos = i;
+                trobat = true;
+            }
+        }
+
+        return pos;
+    }
+     */
+ /*
      ALIMENT
      */
  /*
@@ -259,16 +288,17 @@ public class Cuina implements Components {
     public void afegirAliment() {
         Aliment aliment = Aliment.nouAliment();
 
-        if (seleccionarAliment(aliment.getCodi()) == -1) {
-            components[posicioComponents] = aliment;
-            posicioComponents++;
-        } else {
-            System.out.println("\nL'aliment ja existeix");
-        }
-
+        //if (seleccionarComponent(aliment.getCodi()) == -1) {
+        // if (seleccionarComponent(aliment.getCodi()) == -1) {
+        components[posicioComponents] = aliment;
+        posicioComponents++;
+        // } else {
+        //  System.out.println("\nL'aliment ja existeix");
+        //}
     }
 
     public int seleccionarComponent(int tipusComponent, Object codi) {
+
         String tipusObjecte;
         int valor;
         int pos = -1;
@@ -313,14 +343,14 @@ public class Cuina implements Components {
             }// recepta
 
             if (components[i] instanceof MenuOrdinari) {
-                if (((MenuOrdinari) components[i]).getCodi() == (int)codi) {
+                if (((MenuOrdinari) components[i]).getCodi() == (int) codi) {
                     pos = i;
                     trobat = true;
                 }
             }// menu ordinari
 
             if (components[i] instanceof MenuRegim) {
-                if (((MenuRegim) components[i]).getCodi()==((int)codi)) {
+                if (((MenuRegim) components[i]).getCodi() == ((int) codi)) {
                     pos = i;
                     trobat = true;
                 }
@@ -347,6 +377,23 @@ public class Cuina implements Components {
     }
 
     /*
+    public int seleccionarMenuOrdinari() {
+
+        System.out.println("\nCodi del menú ordinari?:");
+        boolean trobat = false;
+        int pos = -1;
+
+        for (int i = 0; i < posicioMenusOrdinaris && !trobat; i++) {
+            if (menusOrdinaris[i].getCodi() == DADES.nextInt()) {
+                pos = i;
+                trobat = true;
+            }
+        }
+
+        return pos;
+    }*/
+
+ /*
      MENÚ RÈGIM
      */
  /*
@@ -363,6 +410,23 @@ public class Cuina implements Components {
     }
 
     /*
+    public int seleccionarMenuRegim() {
+
+        System.out.println("\nCodi del menú de règim?:");
+        boolean trobat = false;
+        int pos = -1;
+
+        for (int i = 0; i < posicioMenusRegim && !trobat; i++) {
+            if (menusRegim[i].getCodi() == DADES.nextInt()) {
+                pos = i;
+                trobat = true;
+            }
+        }
+
+        return pos;
+    }*/
+
+ /*
      Paràmetres: cap
      Accions:
      - afegeix un nou ingredient al vector d'ingredients d'una recepta seleccionada,
@@ -503,6 +567,16 @@ public class Cuina implements Components {
             pos++;
         }
 
+    }
+
+    @Override
+    public void mostrarComponent() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object demanarDades(String peticio, int tipus) {
+        return Components.super.demanarDades(peticio, tipus); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
