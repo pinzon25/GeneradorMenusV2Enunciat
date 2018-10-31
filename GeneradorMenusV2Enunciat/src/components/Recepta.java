@@ -6,14 +6,13 @@
  */
 package components;
 
-import java.util.Scanner;
-
 /**
  *
  * @author fta
  */
 public class Recepta implements Components {
 
+    /*Com la interface ja te la variable de tipus Scanner, aqui podem comentarla o directament eliminarla.*/
     //private final static Scanner DADES = new Scanner(System.in);
     private String codi;
     private String nom;
@@ -36,6 +35,17 @@ public class Recepta implements Components {
      - assignada s'ha d'inicialitzar a false, ja que cuan es crea una recepta no està
      assignada a cap menú.
      */
+    public Recepta() {
+        codi = "";
+        nom = "";
+        ingredients = new Aliment[25];
+        posicioIngredients = 0;
+        elaboracio = "";
+        tipus = "";
+        calories = 0;
+        assignada = false;
+    }
+
     public Recepta(String pCodi, String pNom, String pElaboracio, String pTipus, double pCalories) {
         codi = pCodi;
         nom = pNom;
@@ -129,15 +139,23 @@ public class Recepta implements Components {
      Francesc Xavier, o bé, matí i tarda.
      Retorn: La nova recepta.
      */
-    public void novaRecepta() {
-        /*
+ /*
+    Com el metode novaRecepta() no es estatic, aqui si podem utilitzar el metode demanarDades, declarat a la interface.
+        Degut a que el metode retorna per defecte un "Object", el qual no es d'un tipus especificat, hem de realitzar un cast perque pugui entrar dintre del switch que conte la funcio i
+        funcionar correctament. Les opcions que tenen un int 0, es perque al switch del metode demanarDades, la opcio per defecte si no es 1,2 o 3, es un nextLine(), per tant els camps amb una
+        amplia quantitat de text els agafem com a nextLine();
+     */
+    public static Recepta novaRecepta() { //Li canviem el modificador i el tipus de retorn, ja que sino, no podrem cridarlo desde la classe cuina i afegir la recepta al vector components.
+        
+        //A la VERSIO ANTERIOR les variables locals es comenten.
         String codi;
         String nom;
         String elaboracio;
         String tipus;
-        double calories;*/
+        double calories;
 
-        //calories = (tipus_dada)demanarDades("Inserta les dades X", valor);
+        /* //VERSIO ANTERIOR.
+        
         codi = (String) demanarDades("\nCodi de la recepta:", 2);
         DADES.nextLine(); //Neteja buffer
         nom = (String) demanarDades("\nNom de la recepta:", 0);
@@ -149,9 +167,23 @@ public class Recepta implements Components {
 
         System.out.println("\nCalories de la recepta:");
         calories = (double) demanarDades("\nCalories de la recepta:", 3);
+         */
+        
+        //VERSIO ACTUAL
+        System.out.println("Codi de la recepta: ");
+        codi = DADES.next();
+        System.out.println("Nom de la recepta: ");
+        nom = DADES.nextLine();
+        System.out.println("Elaboracio de la recepta: ");
+        elaboracio = DADES.nextLine();
+        System.out.println("\n\nTipus de recepta: ((1)primer plat, (2)segon plat, (P)Postres)");
+        tipus = DADES.next();
+        System.out.println("Calories de la recepta: ");
+        calories = DADES.nextDouble();
+
+        return new Recepta(codi, nom, elaboracio, tipus, calories);
 
     }
-
 
     /*
      Paràmetres: cap
@@ -169,7 +201,6 @@ public class Recepta implements Components {
      */
     public void modificarRecepta() {
 
-        //String tipus;
         System.out.println("\nCodi de la recepta: " + codi);
         codi = (String) demanarDades("\nEntra el nou codi:", 2);
         DADES.nextLine(); //Neteja buffer
@@ -199,8 +230,8 @@ public class Recepta implements Components {
         System.out.println("\nIngredients:");
         for (int i = 0; i < ingredients.length && ingredients[i] != null; i++) {
             ingredients[i].mostrarComponent();
-            /*El metode mostrarComponent el podem utilitzar amb l'atribut ingredient d'aquesta classe, de tipus Aliment. 
-            Ja que repassem tots els aliments, i volem imprimir el seu contingut. 
+            /*El metode mostrarComponent el podem utilitzar amb l'atribut ingredient d'aquesta classe,ja que es de tipus Aliment, 
+            despres repassem tots els aliments, i imprimim el seu contingut. 
             El metode de la classe aliment de mostrarAliment(), 
             el podem substituir pel metode de la interface anomentat mostrarComponent(), ja que tambe implementa la interface.
              */
