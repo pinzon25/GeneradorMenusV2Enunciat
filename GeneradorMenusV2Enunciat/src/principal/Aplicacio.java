@@ -161,10 +161,15 @@ public class Aplicacio {
                             break;
                         case 2:
                             //int pos = cuinaActual.seleccionarRecepta();
-                            int pos = cuinaActual.seleccionarComponent(1, null);
+                            int pos = cuinaActual.seleccionarComponent(1, null); //Li passem el 1 ja que es el numero assignat als objectes de tipus Recepta. Retorna la posicio de la recepta.
                             if (pos >= 0) {
                                 //cuinaActual.getReceptes()[pos].modificarRecepta();
-                                cuinaActual.getComponents()[pos].demanarDades(peticio, tipus);
+
+                                cuinaActual.getComponents()[pos].demanarDades("codi", 2);
+                                cuinaActual.getComponents()[pos].demanarDades("nom", 3);
+                                cuinaActual.getComponents()[pos].demanarDades("elaboracio", 0);
+                                cuinaActual.getComponents()[pos].demanarDades("tipus: (1)primer plat, (2)segon plat, (P)Postres", 2);
+                                cuinaActual.getComponents()[pos].demanarDades("Calories", 3);
                             } else {
                                 System.out.println("\nNo existeix aquesta recepta");
                             }
@@ -173,6 +178,10 @@ public class Aplicacio {
                             cuinaActual.afegeixIngredientRecepta();
                             break;
                         case 4:
+                            /*
+                            for (int i = 0; i < cuinaActual.getPosicioReceptes(); i++) {
+                                cuinaActual.getReceptes()[i].mostrarRecepta();
+                            }*/
                             for (int i = 0; i < cuinaActual.getPosicioReceptes(); i++) {
                                 cuinaActual.getReceptes()[i].mostrarRecepta();
                             }
