@@ -242,6 +242,7 @@ public class Cuina implements Components {
      */
     public void afegirRecepta() {
         /*
+        Recepta recepta = new Recepta(); // TODO: comprovar aixo, ho e afegit de més.
         receptes[posicioReceptes] = Recepta.novaRecepta();
         posicioReceptes++;
          */
